@@ -10,6 +10,7 @@ class CVBase(BaseModel):
     data: str  # base64 encoded string
     description: Optional[str] = None
     job_role_id: Optional[PyObjectId] = None  # Reference to JobRole
+    user_id: Optional[PyObjectId] = None  # NEW: Reference to User
 
     class Config:
         json_encoders = {
@@ -21,7 +22,8 @@ class CVBase(BaseModel):
                 "filename": "resume.pdf",
                 "content_type": "application/pdf",
                 "description": "My latest resume",
-                "job_role_id": "646f1e9f12e4f7e0f4b12345"
+                "job_role_id": "646f1e9f12e4f7e0f4b12345",
+                "user_id": "646f1e9f12e4f7e0f4b12346"
             }
         }
 
@@ -32,6 +34,8 @@ class CVCreate(CVBase):
 
 class CVModel(CVBase):
     id: PyObjectId = Field(default_factory=PyObjectId, alias="_id")
+    user_name: Optional[str] = None
+    user_email: Optional[str] = None
 
     class Config:
         allow_population_by_field_name = True
